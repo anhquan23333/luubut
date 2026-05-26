@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trạm Dừng Thanh Xuân</title>
+    <style>
+        :root {
+            --primary: #7d8c8e;
+            --bg: #f7f6f2;
+            --white: #ffffff;
+            --text: #333333;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .container {
+            background-color: var(--white);
+            padding: 40px 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            max-width: 450px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        p.subtitle {
+            font-size: 14px;
+            color: #777;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 16px;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: inherit;
+            font-size: 14px;
+            background-color: #fafafa;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background-color: var(--white);
+            box-shadow: 0 0 0 3px rgba(125, 140, 142, 0.1);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        button {
+            background-color: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 14px;
+            font-size: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        button:hover {
+            background-color: #647274;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Trạm Dừng Thanh Xuân 🌿</h1>
+        <p class="subtitle">Cảm ơn cậu vì đã là một phần ký ức. Trước khi chia xa, hãy để lại chút kỷ niệm ở đây nhé.</p>
+        
+        <form action="https://formsubmit.co/leanhq2309@gmail.com" method="POST">
+            <!-- FormSubmit Configurations -->
+            <input type="hidden" name="_subject" value="Thư lưu bút mới từ tuổi học trò!">
+            <input type="hidden" name="_captcha" value="false">
+            
+            <!-- Danh xưng -->
+            <input type="text" name="Danh xưng" placeholder="Tên gọi thân thương (hoặc cứ giữ ẩn danh nhé)..." required>
+            
+            <!-- Nội dung -->
+            <textarea name="Lời nhắn" placeholder="Kể mình nghe những điều cậu chưa từng nói..." required></textarea>
+            
+            <!-- Nút gửi -->
+            <button type="submit">Gửi gắm thanh xuân ✉️</button>
+        </form>
+    </div>
+
+</body>
+</html>
