@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trạm Ký Ức</title>
+    <title>Lưu bút</title>
     <style>
         :root {
-            --bg: #1e222b;          /* Tông nền tối trầm */
-            --card: #252a34;        /* Nền khung nội dung */
-            --primary: #5c6b73;     /* Màu accent xám trầm */
-            --primary-hover: #475359;
-            --text: #e0e6ed;        /* Màu chữ chính */
-            --text-muted: #919aa7;  /* Màu chữ phụ */
-            --border: #333a47;
+            --bg: #262421;           /* Be tối / Nâu xám trầm */
+            --card: #302d29;         /* Nền form */
+            --text-main: #dfd8cf;    /* Chữ be sáng */
+            --text-muted: #9e978e;   /* Chữ phụ tối màu hơn */
+            --accent: #5c554c;       /* Viền / Nút bấm */
+            --accent-hover: #736b60;
         }
+
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
+            font-family: 'Segoe UI', Helvetica, sans-serif;
             background-color: var(--bg);
-            color: var(--text);
+            color: var(--text-main);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -25,147 +25,203 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            overflow: hidden;
         }
-        .container {
-            background-color: var(--card);
-            padding: 40px 30px;
-            border-radius: 8px;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-            max-width: 450px;
-            width: 100%;
+
+        /* --- PHẦN INTRO --- */
+        #intro-box {
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            transition: opacity 1.5s ease;
+            max-width: 600px;
+            padding: 0 20px;
         }
-        h1 {
-            font-size: 20px;
-            color: var(--text);
-            margin: 0 0 10px 0;
-            font-weight: 500;
+
+        .intro-line {
+            font-size: 16px;
+            font-weight: 300;
             letter-spacing: 0.5px;
-            text-align: center;
-        }
-        p.subtitle {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            margin: 0 0 30px 0;
             line-height: 1.6;
-            text-align: center;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1.2s ease, transform 1.2s ease;
         }
+
+        .intro-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- PHẦN FORM --- */
+        #form-box {
+            background-color: var(--card);
+            padding: 40px;
+            border-radius: 4px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            
+            /* Trạng thái ẩn ban đầu */
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease, transform 1s ease;
+        }
+
+        #form-box.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         input, textarea {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 16px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--accent);
+            border-radius: 4px;
             box-sizing: border-box;
             font-family: inherit;
             font-size: 14px;
-            background-color: #1a1d24;
-            color: var(--text);
+            background-color: #262421;
+            color: var(--text-main);
             transition: all 0.3s ease;
         }
+
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+
         input:focus, textarea:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(92, 107, 115, 0.15);
+            border-color: var(--text-muted);
+            background-color: #2b2824;
         }
+
         textarea {
-            resize: vertical;
-            min-height: 130px;
+            resize: none;
+            min-height: 150px;
         }
+
         button {
-            background-color: var(--primary);
-            color: #ffffff;
+            background-color: var(--accent);
+            color: var(--text-main);
             border: none;
             padding: 14px;
-            font-size: 14.5px;
-            border-radius: 6px;
+            font-size: 14px;
+            border-radius: 4px;
             cursor: pointer;
-            transition: background-color 0.2s;
+            transition: background-color 0.3s;
             width: 100%;
-            font-weight: 500;
-            letter-spacing: 0.5px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
+
         button:hover {
-            background-color: var(--primary-hover);
+            background-color: var(--accent-hover);
         }
-        /* Khung thông báo cảm ơn ẩn sẵn */
-        .success-message {
+
+        /* --- PHẦN LỜI CẢM ƠN --- */
+        #success-msg {
             display: none;
             text-align: center;
-            padding: 20px 0;
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 1px;
+            color: var(--text-main);
+            animation: fadeIn 1s ease forwards;
         }
-        .success-message h2 {
-            font-size: 18px;
-            color: var(--text);
-            margin-bottom: 10px;
-        }
-        .success-message p {
-            font-size: 13.5px;
-            color: var(--text-muted);
-            line-height: 1.6;
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- Lời chào đầu -->
+    <div id="intro-box">
+        <div class="intro-line">Chào bạn, mình là Quân.</div>
+        <div class="intro-line">Mình có thể không biết ai là người viết những dòng này,</div>
+        <div class="intro-line">nhưng mình sẽ không bao giờ quên chúng.</div>
+    </div>
+
+    <!-- Khung nhập liệu -->
+    <div id="form-box">
         <form id="luubut-form" action="https://formsubmit.co/leanhq2309@gmail.com" method="POST">
-            <h1>Trạm Ký Ức</h1>
-            <p class="subtitle">Nơi lưu giữ những dòng viết vội trước ngày tốt nghiệp. Cảm ơn bạn vì đã là một phần hành trình của tôi.</p>
-            
-            <input type="hidden" name="_subject" value="Dòng lưu bút mới từ thời học sinh">
+            <input type="hidden" name="_subject" value="Lưu bút mới">
             <input type="hidden" name="_captcha" value="false">
             
-            <input type="text" name="Danh xưng" placeholder="Danh xưng (Hoặc để trống nếu bạn muốn ẩn danh)...">
+            <input type="text" name="Người gửi" placeholder="Bạn là ai? (Hoặc cứ để lại một cái tên không ai biết...)" required>
+            <textarea name="Nội dung" placeholder="Những điều bạn muốn nói, hoặc chưa kịp cất lời..." required></textarea>
             
-            <textarea name="Nội dung" placeholder="Ghi lại những kỷ niệm, lời chúc hoặc điều chưa kịp nói..." required></textarea>
-            
-            <button type="submit" id="submit-btn">Gửi dòng lưu bút</button>
+            <button type="submit" id="submit-btn">Gửi đi</button>
         </form>
 
-        <div id="success-box" class="success-message">
-            <h2>Đã lưu lại kỷ niệm ✉️</h2>
-            <p>Cảm ơn bạn đã để lại một phần ký ức tại đây.<br>Chúc bạn luôn vững bước trên con đường phía trước.</p>
+        <div id="success-msg">
+            Thank you for being a part of me.
         </div>
     </div>
 
     <script>
+        // Xử lý hiệu ứng chữ chạy đầu trang
+        document.addEventListener("DOMContentLoaded", () => {
+            const lines = document.querySelectorAll('.intro-line');
+            const introBox = document.getElementById('intro-box');
+            const formBox = document.getElementById('form-box');
+
+            // Hiển thị lần lượt từng câu
+            setTimeout(() => lines[0].classList.add('visible'), 500);
+            setTimeout(() => lines[1].classList.add('visible'), 2500);
+            setTimeout(() => lines[2].classList.add('visible'), 4500);
+
+            // Fade out toàn bộ intro và Fade in form
+            setTimeout(() => {
+                introBox.style.opacity = '0';
+                setTimeout(() => {
+                    introBox.style.display = 'none';
+                    formBox.style.display = 'block';
+                    // Delay nhỏ để CSS nhận diện thay đổi display trước khi add class
+                    setTimeout(() => formBox.classList.add('visible'), 50); 
+                }, 1500);
+            }, 7500);
+        });
+
+        // Xử lý Gửi Form không chuyển trang
         document.getElementById('luubut-form').addEventListener('submit', function(e) {
-            e.preventDefault(); // Chặn hành vi chuyển trang mặc định
+            e.preventDefault();
             
             const form = this;
             const btn = document.getElementById('submit-btn');
-            const successBox = document.getElementById('success-box');
+            const successMsg = document.getElementById('success-msg');
             
             btn.innerText = 'Đang gửi...';
             btn.disabled = true;
 
-            const formData = new FormData(form);
-
-            // Gửi dữ liệu ngầm (AJAX) đến FormSubmit
             fetch(form.action, {
                 method: 'POST',
-                body: formData,
-                headers: {
-                    'Accept': 'application/json'
-                }
+                body: new FormData(form),
+                headers: { 'Accept': 'application/json' }
             })
             .then(response => {
                 if (response.ok) {
-                    form.style.display = 'none';      // Ẩn form đi
-                    successBox.style.display = 'block'; // Hiện khung cảm ơn
+                    form.style.display = 'none';
+                    successMsg.style.display = 'block';
                 } else {
-                    alert('Có lỗi xảy ra, vui lòng thử lại sau.');
-                    btn.innerText = 'Gửi dòng lưu bút';
+                    alert('Lỗi kết nối. Vui lòng thử lại.');
+                    btn.innerText = 'Gửi đi';
                     btn.disabled = false;
                 }
             })
             .catch(error => {
-                alert('Không thể kết nối. Vui lòng kiểm tra lại mạng.');
-                btn.innerText = 'Gửi dòng lưu bút';
+                alert('Không thể kết nối mạng.');
+                btn.innerText = 'Gửi đi';
                 btn.disabled = false;
             });
         });
     </script>
-
 </body>
 </html>
