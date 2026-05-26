@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trạm Dừng Thanh Xuân</title>
+    <title>Trạm Ký Ức</title>
     <style>
         :root {
-            --primary: #7d8c8e;
-            --bg: #f7f6f2;
-            --white: #ffffff;
-            --text: #333333;
+            --bg: #1e222b;          /* Tông nền tối trầm */
+            --card: #252a34;        /* Nền khung nội dung */
+            --primary: #5c6b73;     /* Màu accent xám trầm */
+            --primary-hover: #475359;
+            --text: #e0e6ed;        /* Màu chữ chính */
+            --text-muted: #919aa7;  /* Màu chữ phụ */
+            --border: #333a47;
         }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, sans-serif;
@@ -24,88 +27,145 @@
             box-sizing: border-box;
         }
         .container {
-            background-color: var(--white);
+            background-color: var(--card);
             padding: 40px 30px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
             max-width: 450px;
             width: 100%;
-            text-align: center;
         }
         h1 {
-            font-size: 22px;
-            color: var(--primary);
-            margin-bottom: 8px;
-            font-weight: 600;
+            font-size: 20px;
+            color: var(--text);
+            margin: 0 0 10px 0;
+            font-weight: 500;
             letter-spacing: 0.5px;
+            text-align: center;
         }
         p.subtitle {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 30px;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            margin: 0 0 30px 0;
             line-height: 1.6;
+            text-align: center;
         }
         input, textarea {
             width: 100%;
             padding: 14px;
             margin-bottom: 16px;
-            border: 1px solid #eaeaea;
-            border-radius: 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
             box-sizing: border-box;
             font-family: inherit;
             font-size: 14px;
-            background-color: #fafafa;
+            background-color: #1a1d24;
+            color: var(--text);
             transition: all 0.3s ease;
         }
         input:focus, textarea:focus {
             outline: none;
             border-color: var(--primary);
-            background-color: var(--white);
-            box-shadow: 0 0 0 3px rgba(125, 140, 142, 0.1);
+            box-shadow: 0 0 0 3px rgba(92, 107, 115, 0.15);
         }
         textarea {
             resize: vertical;
-            min-height: 120px;
+            min-height: 130px;
         }
         button {
             background-color: var(--primary);
-            color: var(--white);
+            color: #ffffff;
             border: none;
             padding: 14px;
-            font-size: 15px;
-            border-radius: 8px;
+            font-size: 14.5px;
+            border-radius: 6px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s;
             width: 100%;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
         button:hover {
-            background-color: #647274;
+            background-color: var(--primary-hover);
+        }
+        /* Khung thông báo cảm ơn ẩn sẵn */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .success-message h2 {
+            font-size: 18px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
+        .success-message p {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Trạm Dừng Thanh Xuân 🌿</h1>
-        <p class="subtitle">Cảm ơn cậu vì đã là một phần ký ức. Trước khi chia xa, hãy để lại chút kỷ niệm ở đây nhé.</p>
-        
-        <form action="https://formsubmit.co/leanhq2309@gmail.com" method="POST">
-            <!-- FormSubmit Configurations -->
-            <input type="hidden" name="_subject" value="Thư lưu bút mới từ tuổi học trò!">
+        <form id="luubut-form" action="https://formsubmit.co/leanhq2309@gmail.com" method="POST">
+            <h1>Trạm Ký Ức</h1>
+            <p class="subtitle">Nơi lưu giữ những dòng viết vội trước ngày tốt nghiệp. Cảm ơn bạn vì đã là một phần hành trình của tôi.</p>
+            
+            <input type="hidden" name="_subject" value="Dòng lưu bút mới từ thời học sinh">
             <input type="hidden" name="_captcha" value="false">
             
-            <!-- Danh xưng -->
-            <input type="text" name="Danh xưng" placeholder="Tên gọi thân thương (hoặc cứ giữ ẩn danh nhé)..." required>
+            <input type="text" name="Danh xưng" placeholder="Danh xưng (Hoặc để trống nếu bạn muốn ẩn danh)...">
             
-            <!-- Nội dung -->
-            <textarea name="Lời nhắn" placeholder="Kể mình nghe những điều cậu chưa từng nói..." required></textarea>
+            <textarea name="Nội dung" placeholder="Ghi lại những kỷ niệm, lời chúc hoặc điều chưa kịp nói..." required></textarea>
             
-            <!-- Nút gửi -->
-            <button type="submit">Gửi gắm thanh xuân ✉️</button>
+            <button type="submit" id="submit-btn">Gửi dòng lưu bút</button>
         </form>
+
+        <div id="success-box" class="success-message">
+            <h2>Đã lưu lại kỷ niệm ✉️</h2>
+            <p>Cảm ơn bạn đã để lại một phần ký ức tại đây.<br>Chúc bạn luôn vững bước trên con đường phía trước.</p>
+        </div>
     </div>
+
+    <script>
+        document.getElementById('luubut-form').addEventListener('submit', function(e) {
+            e.preventDefault(); // Chặn hành vi chuyển trang mặc định
+            
+            const form = this;
+            const btn = document.getElementById('submit-btn');
+            const successBox = document.getElementById('success-box');
+            
+            btn.innerText = 'Đang gửi...';
+            btn.disabled = true;
+
+            const formData = new FormData(form);
+
+            // Gửi dữ liệu ngầm (AJAX) đến FormSubmit
+            fetch(form.action, {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    form.style.display = 'none';      // Ẩn form đi
+                    successBox.style.display = 'block'; // Hiện khung cảm ơn
+                } else {
+                    alert('Có lỗi xảy ra, vui lòng thử lại sau.');
+                    btn.innerText = 'Gửi dòng lưu bút';
+                    btn.disabled = false;
+                }
+            })
+            .catch(error => {
+                alert('Không thể kết nối. Vui lòng kiểm tra lại mạng.');
+                btn.innerText = 'Gửi dòng lưu bút';
+                btn.disabled = false;
+            });
+        });
+    </script>
 
 </body>
 </html>
